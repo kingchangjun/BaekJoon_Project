@@ -2,49 +2,42 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.StringTokenizer;
-import java.util.ArrayList;
 
 public class Main1764 {
-    public static void main(String[] args)throws IOException{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine()," ");
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
 
-        HashMap<String, String> map = new HashMap<>();
+        // A와 B 집합을 HashSet으로 선언
+        HashSet<Integer> setA = new HashSet<>();
+        HashSet<Integer> setB = new HashSet<>();
 
-        for(int i = 0 ; i< n ; i++)
-        {
-            String Key = br.readLine();
-            map.put(Key,Key);
+        // 집합 A 입력
+        st = new StringTokenizer(br.readLine(), " ");
+        for (int i = 0; i < n; i++) {
+            setA.add(Integer.parseInt(st.nextToken()));
         }
 
-        StringBuilder sb = new StringBuilder();
-
-        int c =0;
-        ArrayList<String> list = new ArrayList<>();
-
-        for(int i =0 ; i<m ; i++)
-        {
-            String s = br.readLine();
-            if(map.containsKey(s))
-            {
-                list.add(s);
-                c++;
-            }
+        // 집합 B 입력
+        st = new StringTokenizer(br.readLine(), " ");
+        for (int i = 0; i < m; i++) {
+            setB.add(Integer.parseInt(st.nextToken()));
         }
-        list.sort((s1,s2)->s1.compareTo(s2));
 
-        for(String s : list)
-        {
-            sb.append(s).append('\n');
-        }
-        System.out.println(c+"\n"+sb);
+        // A - B 개수 계산
+        HashSet<Integer> diffA = new HashSet<>(setA);
+        diffA.removeAll(setB); // A에서 B에 있는 요소 제거
 
+        // B - A 개수 계산
+        HashSet<Integer> diffB = new HashSet<>(setB);
+        diffB.removeAll(setA); // B에서 A에 있는 요소 제거
 
+        // 대칭 차집합 크기 출력
+        System.out.println(diffA.size() + diffB.size());
     }
-
 }
