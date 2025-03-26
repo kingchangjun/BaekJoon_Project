@@ -1,63 +1,43 @@
 package org.example;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
-public class Main {
-    static boolean[] primeArray = new boolean[1000001];
 
-    //입력&출력 부분
-    public static void main(String[] args) throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+public class Main{
+    public static void main(String[] args)throws IOException{
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
-        findPrime();
+        int n = Integer.parseInt(br.readLine());
 
-        int T = Integer.parseInt(br.readLine()); //테스트의 개수
-
-        for(int i = 0; i < T; i++){
-
-            int N  = Integer.parseInt(br.readLine()); //2보다 큰 짝수
-
-            int partitionCount = 0; // 파티션의 짝수
-
-            if(N % 2 == 0 && N != 0) { //짝수인 경우만
-                // 순서만 다르고 두 소수가 같은 경우는 같은 파티션임으로 N/2한다.
-                for (int j = 2; j <= N / 2; j++) {
-                    // 두 수의 합이 N일때 그 두수가 모두 소수일 때
-                    if (!primeArray[j]) { // 소수일 때
-                        if (!primeArray[N - j]) { // N- 소수 = 소수일때
-                            partitionCount++;
-                        }
-                    }
-                }
-                bw.write(partitionCount + "\n");
-            }else{
-                bw.write(0 + " \n");
-            }
+        while(n-- >0){
+            long x = Long.parseLong(br.readLine());
+            sb.append(nextPrime(x)).append('\n');
         }
+       System.out.println(sb);
 
-        br.close();
-
-        bw.flush();
-        bw.close();
+    }
+    public static long nextPrime(long x)
+    {
+        if(x <=2 ) return 2;
+        while(!isPrime(x))
+        {
+            x++;
+        }
+        return x;
     }
 
-    //소수 판별 배열 만다는 메소드
-    static void findPrime(){
-        primeArray[0] = primeArray[1] = true;
+    public static boolean isPrime(long x){
+      //  if(x <= 1) return false;
+       // if(x == 2) return true;
+        if(x % 2 == 0) return false;
 
-        for (int i = 2; i < primeArray.length; i++) { // 미리 골드바흐의 추측에 따른 소수값 구하기
-
-            if (primeArray[i] == false) {
-
-                for (int j = 2; i * j < primeArray.length; j++) {
-                    primeArray[i * j] = true;
-                }
-            }
-
+        long sqrtN = (long) Math.sqrt(x);
+        for( long i = 3; i <= sqrtN ; i+=2){
+            if( x % i == 0) return false;
         }
+        return true;
     }
 }
