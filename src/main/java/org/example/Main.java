@@ -3,41 +3,47 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 
-public class Main{
-    public static void main(String[] args)throws IOException{
-        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+public class Main {
+    static final int Max = 123456 * 2;
+    static boolean[] isPrime = new boolean[Max + 1];
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
 
-        int n = Integer.parseInt(br.readLine());
+        sieve();
 
-        while(n-- >0){
-            long x = Long.parseLong(br.readLine());
-            sb.append(nextPrime(x)).append('\n');
-        }
-       System.out.println(sb);
-
-    }
-    public static long nextPrime(long x)
-    {
-        if(x <=2 ) return 2;
-        while(!isPrime(x))
+        while(true)
         {
-            x++;
+            int n = Integer.parseInt(br.readLine());
+            if(n == 0) break;
+
+            int count = 0;
+
+            for(int i =n+1 ; i<=2 *n ; i++)
+            {
+                if(isPrime[i]) count++;
+            }
+            sb.append(count).append('\n');
         }
-        return x;
+        System.out.println(sb);
+
     }
 
-    public static boolean isPrime(long x){
-      //  if(x <= 1) return false;
-       // if(x == 2) return true;
-        if(x % 2 == 0) return false;
+    public static void sieve() {
+        Arrays.fill(isPrime, true);
+        isPrime[0] = isPrime[1] = false;
 
-        long sqrtN = (long) Math.sqrt(x);
-        for( long i = 3; i <= sqrtN ; i+=2){
-            if( x % i == 0) return false;
+        for(int i =2; i * i <= Max; i++){
+            if (isPrime[i]) {
+                for(int j = i*i ; j<=Max ; j+=i){
+                    isPrime[j] = false;
+                }
+            }
         }
-        return true;
+
     }
 }
