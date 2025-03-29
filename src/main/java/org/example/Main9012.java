@@ -41,3 +41,4 @@ public class Main9012{
             return "NO";
     }
 }
+
