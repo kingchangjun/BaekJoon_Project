@@ -25,9 +25,9 @@ public class Main24511{
         st = new StringTokenizer(br.readLine());
         for(int i =0; i < n ; i++)
         {
-            int value = Integer.parseInt(st.nextToken());
+            //int value = ;
             if(type[i] == 0)
-                queue.addLast(value);
+                queue.add(Integer.parseInt(st.nextToken()));
         }
 
         int m = Integer.parseInt(br.readLine());
