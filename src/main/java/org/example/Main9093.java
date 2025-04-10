@@ -19,7 +19,7 @@ public class Main9093{
         {
             st = new StringTokenizer(br.readLine()," ");
 
-            while(st.hasMoreElements())
+            while(st.hasMoreTokens())
             {
                 String s = st.nextToken();
                 sb.append(new StringBuilder(s).reverse()).append(" ");
