@@ -31,7 +31,7 @@ public class Main1406 {
                         right.push(left.pop());
                     break;
                 case 'D':
-                    if(!left.isEmpty())
+                    if(!right.isEmpty())
                         left.push(right.pop());
                     break;
                 case 'B':
