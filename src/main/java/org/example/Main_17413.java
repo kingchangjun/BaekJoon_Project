@@ -34,11 +34,11 @@ public class Main_17413 {
             }
             // 태그안 문자열 일때,
             // 태그 내부 문자열은 그대로 출력
-            else if(tag = true) {
+            else if(tag == true) {
                 sb.append(str.charAt(i));
             }
             // 태그가 아닐 때,
-            else if(tag =false) {
+            else if(tag == false) {
                 if(str.charAt(i) == ' ') {
 
                     while( !stack.isEmpty() ) {
