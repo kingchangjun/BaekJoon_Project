@@ -11,7 +11,6 @@ public class Main2346{
     static class Balloon{
         int index;
         int move;
-
         Balloon(int index, int move){
             this.index = index;
             this.move = move;
@@ -23,7 +22,7 @@ public class Main2346{
         StringBuilder sb = new StringBuilder();
         StringTokenizer st ;
         LinkedList<Balloon> queue = new LinkedList<>();
-
+        System.out.println("실행할 횟수를 입력하세요 ");
         int n  = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
 
