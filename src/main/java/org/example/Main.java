@@ -4,49 +4,54 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Stack;
 
-public class Main {
-    static final int max = 1000000;
-    static boolean[] isPrime = new boolean[max+1];
+    public class Main {
+        public static void main(String[] args) throws IOException {
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        ip();
-        int n = Integer.parseInt(br.readLine());
+            int num = Integer.parseInt(br.readLine());
+            String data = br.readLine();
+            double[] arr = new double[num];
+            for(int i = 0; i < arr.length; i++) {
+                arr[i] = Double.parseDouble(br.readLine());
+            }
 
+            Stack<Double> stack = new Stack<>();
 
-        for (int i = 0; i < n; i++) {
-            sb.append(np(Integer.parseInt(br.readLine()))).append('\n');
-        }
-        System.out.println(sb);
-    }
-
-    public static void ip(){
-            Arrays.fill(isPrime,true);
-            isPrime[0] = isPrime[1] =false;
-
-
-            for(int i =2; i*i <=max; i++)
-            {
-                if(isPrime[i])
-                {
-                    for(int j =i*i ; j<=max ; j+=i)
-                    {
-                        isPrime[j] = false;
+            double result = 0;
+            for(int i = 0; i < data.length(); i++) {
+                if('A' <= data.charAt(i) && data.charAt(i) <= 'Z') {
+                    stack.push(arr[data.charAt(i) - 'A']);
+                } else {
+                    if(!stack.isEmpty()) {
+                        double first = stack.pop();
+                        double second = stack.pop();
+                        switch (data.charAt(i)) {
+                            case '+':
+                                result = second + first;
+                                stack.push(result);
+                                continue;
+                            case '-':
+                                result = second - first;
+                                stack.push(result);
+                                continue;
+                            case '*':
+                                result = second * first;
+                                stack.push(result);
+                                continue;
+                            case '/':
+                                result = second / first;
+                                stack.push(result);
+                                continue;
+                        }
                     }
                 }
             }
-    }
 
-    public static int np(int x) {
-        int count = 0;
+            System.out.printf("%.2f", stack.pop());
 
-        for (int i = 2; i <= x / 2; i++) {
-            if (isPrime[i] && isPrime[x-i])
-                count++;
+            br.close();
         }
-        return count;
     }
-}

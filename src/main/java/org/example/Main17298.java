@@ -9,29 +9,35 @@ import java.util.Stack;
 public class Main17298 {
     public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Stack<Integer> stack = new Stack<>();
-        StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(br.readLine());
+
+        int[] arr = new int[n];
+        int[] answer = new int[n];
         StringTokenizer st = new StringTokenizer(br.readLine()," ");
+        Stack<Integer> stack = new Stack<>();
         for(int i =0 ; i<n ; i++)
         {
-            int s = Integer.parseInt(st.nextToken());
-            stack.push(s);
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        while(!stack.isEmpty()) {
-            for (int j = 1; j <= stack.size(); j++) {
-                if (stack.getFirst() < stack.get(j)) {
-                    stack.removeFirst();
-                    sb.append(stack.get(j)).append(" ");
-                } else
-                    sb.append("-1").append(" ");
+
+
+       for(int i =0 ; i<n ; i++)
+        {
+            while(!stack.isEmpty() && arr[stack.peek()] < arr[i])
+            {
+                answer[stack.pop()] = arr[i];
             }
+            stack.push(i);
         }
-        System.out.println(sb);
 
+       while(!stack.isEmpty())
+           answer[stack.pop()] = -1;
 
+       StringBuilder sb = new StringBuilder();
+       for(int num : answer)
+           sb.append(num).append(" ");
 
-
+       System.out.println(sb);
         }
 }
