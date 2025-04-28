@@ -4,54 +4,48 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.Stack;
 
-    public class Main {
-        public static void main(String[] args) throws IOException {
+public class Main {
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
 
-            int num = Integer.parseInt(br.readLine());
-            String data = br.readLine();
-            double[] arr = new double[num];
-            for(int i = 0; i < arr.length; i++) {
-                arr[i] = Double.parseDouble(br.readLine());
-            }
+        char[] calculation = scan.nextLine().toCharArray();
 
-            Stack<Double> stack = new Stack<>();
-
-            double result = 0;
-            for(int i = 0; i < data.length(); i++) {
-                if('A' <= data.charAt(i) && data.charAt(i) <= 'Z') {
-                    stack.push(arr[data.charAt(i) - 'A']);
-                } else {
-                    if(!stack.isEmpty()) {
-                        double first = stack.pop();
-                        double second = stack.pop();
-                        switch (data.charAt(i)) {
-                            case '+':
-                                result = second + first;
-                                stack.push(result);
-                                continue;
-                            case '-':
-                                result = second - first;
-                                stack.push(result);
-                                continue;
-                            case '*':
-                                result = second * first;
-                                stack.push(result);
-                                continue;
-                            case '/':
-                                result = second / first;
-                                stack.push(result);
-                                continue;
-                        }
+        Stack<Character> op = new Stack<>(); // 연산자를 담을 스택
+        StringBuilder sb = new StringBuilder();//정답을 담을 문자열
+        for(int i = 0; i < calculation.length; i++) {
+            // 연산식이 숫자라면 그대로 문자열에 담아준다.
+            if(calculation[i] >= 'A' && calculation[i] <= 'Z') sb.append(calculation[i] + "");
+            else { //연산식이 숫자가 아니라면
+                if(calculation[i] == '(') op.push(calculation[i]);
+                else if(calculation[i] == ')') { //'('이 나올때까지 문자열에 담아준다.
+                    while(!op.isEmpty() && op.peek() != '(') {
+                        sb.append(op.pop()); //괄호가 아니면 연산자를 꺼내어 문자열에 담는다.
                     }
+                    if(!op.isEmpty()) op.pop(); //'('연산자를 꺼내준다.
+                }
+                else { // + - / * 연산자 일경우
+                    while(!op.isEmpty() && precedence(op.peek()) >= precedence(calculation[i])) {
+                        sb.append(op.pop());
+                    }
+                    op.push(calculation[i]);
                 }
             }
-
-            System.out.printf("%.2f", stack.pop());
-
-            br.close();
         }
+        //스택에 있는 남은 연산자를 모두 꺼낸다.
+        while(!op.isEmpty()) {
+            sb.append(op.pop());
+        }
+        System.out.println(sb);
     }
+
+    public static int precedence(char op) {
+        if(op == '*' || op == '/') return 2;
+        else if(op == '+' || op == '-') return 1;
+        else return 0; //스택 안에는 '('도 들어올 수 있다. 하지만 '('는 꺼내져서는 안되기 때문에 제일 낮은 값을 반환하도록 한다.
+    }
+}
+
