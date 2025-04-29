@@ -3,49 +3,19 @@ package org.example;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.Stack;
 
-public class Main {
-
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-
-        char[] calculation = scan.nextLine().toCharArray();
-
-        Stack<Character> op = new Stack<>(); // 연산자를 담을 스택
-        StringBuilder sb = new StringBuilder();//정답을 담을 문자열
-        for(int i = 0; i < calculation.length; i++) {
-            // 연산식이 숫자라면 그대로 문자열에 담아준다.
-            if(calculation[i] >= 'A' && calculation[i] <= 'Z') sb.append(calculation[i] + "");
-            else { //연산식이 숫자가 아니라면
-                if(calculation[i] == '(') op.push(calculation[i]);
-                else if(calculation[i] == ')') { //'('이 나올때까지 문자열에 담아준다.
-                    while(!op.isEmpty() && op.peek() != '(') {
-                        sb.append(op.pop()); //괄호가 아니면 연산자를 꺼내어 문자열에 담는다.
-                    }
-                    if(!op.isEmpty()) op.pop(); //'('연산자를 꺼내준다.
+        public class Main {
+            public static void main(String[] args) throws IOException {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                int[] arr = new int[26];  //알파벳 개수를 저장하는 배열
+                String s = br.readLine();  //단어 입력받기
+                for (int i = 0; i < s.length(); i++) {
+                    char c = s.charAt(i);
+                    arr[c - 97]++;  //개수 1씩 늘려주기
                 }
-                else { // + - / * 연산자 일경우
-                    while(!op.isEmpty() && precedence(op.peek()) >= precedence(calculation[i])) {
-                        sb.append(op.pop());
-                    }
-                    op.push(calculation[i]);
+                for (int i = 0; i < 26; i++) {
+                    System.out.print(arr[i] + " ");
                 }
             }
         }
-        //스택에 있는 남은 연산자를 모두 꺼낸다.
-        while(!op.isEmpty()) {
-            sb.append(op.pop());
-        }
-        System.out.println(sb);
-    }
-
-    public static int precedence(char op) {
-        if(op == '*' || op == '/') return 2;
-        else if(op == '+' || op == '-') return 1;
-        else return 0; //스택 안에는 '('도 들어올 수 있다. 하지만 '('는 꺼내져서는 안되기 때문에 제일 낮은 값을 반환하도록 한다.
-    }
-}
 
