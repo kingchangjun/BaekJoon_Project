@@ -3,35 +3,19 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.util.StringTokenizer;
+
 
 public class Main10820 {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String line;
+        String line = br.readLine();
 
-        while( (line = br.readLine()) != null)
-        {
-            int lower = 0;
-            int upper = 0;
-            int digit = 0;
-            int space = 0;
+        int len = line.length();
+        System.out.println(len);
 
-            for( char c : line.toCharArray()){
-                if (Character.isLowerCase(c))
-                    lower++;
-                else if(Character.isUpperCase(c))
-                    upper++;
-                else if(Character.isDigit(c))
-                    digit++;
-                else if(c ==' ')
-                    space++;
-            }
 
-            System.out.println(lower +" "+upper +" "+ digit +" "+ space);
-        }
 
     }
 }
