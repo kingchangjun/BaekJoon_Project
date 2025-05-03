@@ -3,26 +3,22 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main_yesterday {
-
     public static void main(String[] args)throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        String a = st.nextToken();
+        String b = st.nextToken();
+        String c = st.nextToken();
+        String d = st.nextToken();
 
-        String s = br.readLine();
+        String x = a+b;
+        String y = c+d;
 
-        for(int i =0 ; i <s.length(); i++)
-        {
-            char c = s.charAt(i);
-
-            if(Character.isLowerCase(c))
-                sb.append((char)((c - 'a'+13)%26 + 'a'));
-            else if(Character.isUpperCase(c))
-                sb.append((char)((c - 'A'+13)%26 + 'A'));
-            else
-                sb.append(c);
-        }
-        System.out.println(sb);
+        long q = Long.parseLong(x);
+        long w = Long.parseLong(y);
+        System.out.println(q+w);
     }
 }
