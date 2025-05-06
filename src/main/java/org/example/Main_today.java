@@ -15,19 +15,20 @@ public class Main_today {
         int b = Integer.parseInt(st.nextToken());
         int c = gcd(a,b);
 
-        System.out.println(c+"\n"+a*b/c);
+        System.out.println(gcd(a,b));
+        System.out.println(lcm(a,b));
 
 
   }
   public static int gcd(int a , int b )
   {
-      while(b!= 0)
-      {
-          int r = a%b;
-          a = b;
-          b = r;
-      }
-      return a;
+      if (b == 0) return a;
+      return gcd(b,a%b);
+  }
+  public static int lcm(int a, int b)
+  {
+      int GCD = gcd(a,b);
+      return a*b / GCD;
   }
 
 }
