@@ -3,22 +3,21 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.Arrays;
 
 public class Main_yesterday {
     public static void main(String[] args)throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        String a = st.nextToken();
-        String b = st.nextToken();
-        String c = st.nextToken();
-        String d = st.nextToken();
+       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String x = a+b;
-        String y = c+d;
+       String s = br.readLine();
 
-        long q = Long.parseLong(x);
-        long w = Long.parseLong(y);
-        System.out.println(q+w);
+       String[] sub = new String[s.length()];
+       for(int i = 0 ; i < s.length(); i++)
+       {
+           sub[i]= s.substring(i,s.length());
+       }
+       Arrays.sort(sub);
+       for(String v : sub)
+           System.out.println(v);
     }
 }
