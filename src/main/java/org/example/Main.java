@@ -1,21 +1,43 @@
 package org.example;
 
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-        public class Main {
-            public static void main(String[] args) throws IOException {
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                int[] arr = new int[26];  //알파벳 개수를 저장하는 배열
-                String s = br.readLine();  //단어 입력받기
-                for (int i = 0; i < s.length(); i++) {
-                    char c = s.charAt(i);
-                    arr[c - 97]++;  //개수 1씩 늘려주기
-                }
-                for (int i = 0; i < 26; i++) {
-                    System.out.print(arr[i] + " ");
-                }
-            }
+class Main{
+    public static void main(String[] args) throws IOException{
+        BufferedReader br=  new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+
+      long five = five_get(n) - five_get(n-m) - five_get(m);
+      long two = two_get(n) - two_get(n-m) - two_get(m);
+      System.out.println(Math.min(two,five));
+    }
+    static long five_get(long num)
+    {
+        int  count= 0;
+
+        while(num >= 5)
+        {
+            count += num/5;
+            num/=5;
         }
+        return count;
+    }
+    static long two_get(long num)
+    {
+        int count =0;
+        while(num >=2)
+        {
+            count +=num/2;
+            num/=2;
+        }
+        return count;
+    }
 
+
+
+}
