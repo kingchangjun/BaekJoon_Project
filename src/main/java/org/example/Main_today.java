@@ -3,42 +3,33 @@ package org.example;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
-import java.util.StringTokenizer;
 
 class Main_today{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        String binary = br.readLine();
 
-        int n = Integer.parseInt(st.nextToken());
-        int s = Integer.parseInt(st.nextToken());
+        int len = binary.length();
+        int n = (3- len%3) %3; // 0 개수 구하기.
 
-        st = new StringTokenizer(br.readLine());
-        int[] arr = new int[n];
-
-        for(int i = 0; i < n ; i++)
+        for(int i =0 ; i< n ; i++)
         {
-            arr[i]=Integer.parseInt(st.nextToken());
+            sb.append("0"); // n 만큼 0 붙이기.
         }
+        sb.append(binary); // 앞에 0 붙이고 합치기.
 
-        int d = Math.abs(arr[0]-s);
-        for(int i = 1; i < n ; i++)
+        String n_len = sb.toString(); // 진짜 string으로 바꿔주기. sb는 가짜 string임.
+        sb.setLength(0); // sb 초기화. 한번 더 쓸라고
+
+        for(int i =0; i< n_len.length() ; i+=3)
         {
-            d= gcd(d,Math.abs(arr[i] - s));
+            String three = n_len.substring(i,i+3); // i ~ i+3까지 자르기
+            int x = Integer.parseInt(three,2); //앞에 three 는 2진수니깐 10진수로 바꿔줘라는 뜻.
+            sb.append(x);
         }
+        System.out.println(sb);
 
-        System.out.println(d);
 
     }
-    public static int gcd(int a, int b)
-    {
-        while(b!=0)
-        {
-            int r = a%b;
-            a = b;
-            b = r;
-        }
-        return a;
-    }
-
 }
