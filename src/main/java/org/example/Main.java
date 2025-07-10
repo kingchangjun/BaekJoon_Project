@@ -1,43 +1,54 @@
 package org.example;
 
 import java.io.IOException;
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.BufferedReader;
 import java.util.StringTokenizer;
 
 class Main{
     public static void main(String[] args) throws IOException{
-        BufferedReader br=  new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
 
-      long five = five_get(n) - five_get(n-m) - five_get(m);
-      long two = two_get(n) - two_get(n-m) - two_get(m);
-      System.out.println(Math.min(two,five));
-    }
-    static long five_get(long num)
-    {
-        int  count= 0;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        StringBuilder sb = new StringBuilder();
+        int n = Integer.parseInt(br.readLine());
 
-        while(num >= 5)
+        for(int i = 0 ; i < n; i++)
         {
-            count += num/5;
-            num/=5;
+            st = new StringTokenizer(br.readLine());
+            int m = Integer.parseInt(st.nextToken());
+            int[] arr = new int [m];
+
+
+            for(int j = 0 ; j < m ; j++)
+            {
+                arr[j] = Integer.parseInt(st.nextToken());
+
+            }
+
+            long sum = 0;
+
+            for(int j = 0; j < m-1 ; j ++)
+            {
+                for(int l = j + 1; l<m ; l++ )
+                {
+                    sum+=gcd(arr[j],arr[l]);
+                }
+
+            }
+            sb.append(sum).append('\n');
         }
-        return count;
+        System.out.println(sb);
     }
-    static long two_get(long num)
+    public static int gcd(int a, int b)
     {
-        int count =0;
-        while(num >=2)
+        while(b!=0)
         {
-            count +=num/2;
-            num/=2;
+            int r = a%b;
+
+            a = b;
+            b = r;
         }
-        return count;
+        return a;
     }
-
-
-
 }
