@@ -5,29 +5,32 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
 class Main_today{
-    public static void main(String[] args)throws IOException{
+    public static void main(String[] args) throws IOException
+    {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String octal = br.readLine();
+        int n = Integer.parseInt(br.readLine());
 
+        if(n == 0 ){
+            System.out.println("0");
+            return;
+        }
         StringBuilder sb = new StringBuilder();
 
-        sb.append(Integer.toBinaryString(octal.charAt(0) - '0'));
-        // toBinaryString = 정수를 2진수 문자열로 변환.
-
-        for(int i = 1; i< octal.length() ; i++)
+        while(n != 0)
         {
-            int num = octal.charAt(i)-'0'; // 문자 -> 숫자
-            String bin = Integer.toBinaryString(num);
+            int re = n%-2;
 
-            while(bin.length()<3){
-                bin = "0" + bin;
-              }
-        sb.append(bin);
-
+            if(re <0)
+            {
+                re +=2;
+                n = n/-2 +1;
+            }
+            else {
+                n = n / -2;
+            }
+            sb.append(re);
         }
-
-        System.out.println(sb);
-
+        System.out.println(sb.reverse());
     }
 }
