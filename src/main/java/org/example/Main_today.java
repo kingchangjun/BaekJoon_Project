@@ -5,31 +5,29 @@ import java.io.InputStreamReader;
 import java.io.BufferedReader;
 
 class Main_today{
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        String octal = br.readLine();
+
         StringBuilder sb = new StringBuilder();
-        String binary = br.readLine();
 
-        int len = binary.length();
-        int n = (3- len%3) %3; // 0 개수 구하기.
+        sb.append(Integer.toBinaryString(octal.charAt(0) - '0'));
+        // toBinaryString = 정수를 2진수 문자열로 변환.
 
-        for(int i =0 ; i< n ; i++)
+        for(int i = 1; i< octal.length() ; i++)
         {
-            sb.append("0"); // n 만큼 0 붙이기.
-        }
-        sb.append(binary); // 앞에 0 붙이고 합치기.
+            int num = octal.charAt(i)-'0'; // 문자 -> 숫자
+            String bin = Integer.toBinaryString(num);
 
-        String n_len = sb.toString(); // 진짜 string으로 바꿔주기. sb는 가짜 string임.
-        sb.setLength(0); // sb 초기화. 한번 더 쓸라고
+            while(bin.length()<3){
+                bin = "0" + bin;
+              }
+        sb.append(bin);
 
-        for(int i =0; i< n_len.length() ; i+=3)
-        {
-            String three = n_len.substring(i,i+3); // i ~ i+3까지 자르기
-            int x = Integer.parseInt(three,2); //앞에 three 는 2진수니깐 10진수로 바꿔줘라는 뜻.
-            sb.append(x);
         }
+
         System.out.println(sb);
-
 
     }
 }
