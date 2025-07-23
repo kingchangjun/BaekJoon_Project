@@ -1,33 +1,30 @@
 package org.example;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 class Main_yesterday{
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
 
-        String a = br.readLine();
+        int n = Integer.parseInt(br.readLine());
 
-        int count = (3-a.length() %3)%3;
-        for(int i = 0 ; i< count; i++)
+        if(n ==1)
+            return;
+
+        for(int i =2; i*i<=n;i++)
         {
-            sb.append("0");
+            while(n%i ==0)
+            {
+                System.out.println(i);
+                n/=i;
+            }
         }
-        sb.append(a);
-        String b = sb.toString();
-        sb.setLength(0);
-
-        for(int i =0 ; i<b.length() ; i+=3)
+        if(n>1)
         {
-            String c = b.substring(i,i+3);
-           sb.append(Integer.parseInt(c,2));
-
+            System.out.println(n);
         }
-        System.out.println(sb);
-
+        br.close();
     }
-
 }
