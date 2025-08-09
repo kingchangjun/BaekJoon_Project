@@ -1,24 +1,32 @@
 package org.example;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.BufferedReader;
 
-class Main_yesterday{
+//9095
+class Main_yestderday{
     public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        StringBuilder sb = new StringBuilder();
         int n = Integer.parseInt(br.readLine());
 
-        int[] dp = new int[n+1];
-
-        dp[1] = 1;
-        if(n>=2)dp[2] = 2;
-
-        for(int i =3 ; i<=n ; i++)
+        for(int i = 0; i< n ; i++)
         {
-            dp[i] = (dp[i-1]+dp[i-2])%10007;
+            int x = Integer.parseInt(br.readLine());
+            int[] dp = new int[ Math.max(4,x+1) ];
+
+            dp[1] = 1;
+            dp[2] = 2;
+            dp[3] = 4;
+            for(int j = 4; j<=x;j++)
+            {
+                dp[j] = dp[j-1]+dp[j-2]+dp[j-3];
+            }
+
+            sb.append(dp[x]).append("\n");
         }
-        System.out.println(dp[n]);
+        System.out.println(sb);
+
     }
 }
