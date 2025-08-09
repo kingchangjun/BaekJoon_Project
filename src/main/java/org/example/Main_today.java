@@ -3,28 +3,33 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 class Main_today{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
 
         int n = Integer.parseInt(br.readLine());
+        int[] dp = new int[n+1];
+        int[] price = new int[n+1];
+        st = new StringTokenizer(br.readLine());
 
-        for(int j = 0; j<n; j++) {
-            int x = Integer.parseInt(br.readLine());
-
-            int[] dp = new int[Math.max(4,x + 1)];
-            dp[1] = 1;
-            dp[2] = 2;
-            dp[3] = 4;
-
-            for (int i = 4; i <= x; i++) {
-                dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3];
-            }
-                sb.append(dp[x]).append("\n");
-
+        for(int i = 1; i<=n; i++)
+        {
+            price[i] = Integer.parseInt(st.nextToken());
         }
-        System.out.println(sb);
+        dp[0] = 0;
+
+        for(int i = 1 ; i<=n ;i++)
+        {
+            for(int j = 1 ; j<=i ; j++)
+            {
+                dp[i] = Math.max(dp[i], price[j] + dp[i-j]);
+            }
+        }
+        System.out.println(dp[n]);
+
+
     }
 }
