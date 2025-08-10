@@ -1,32 +1,31 @@
 package org.example;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-//9095
-class Main_yestderday{
+class Main_yesterday{
     public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+
         int n = Integer.parseInt(br.readLine());
+        int[] price = new int[n+1];
+        int[] dp = new int [n+1];
 
-        for(int i = 0; i< n ; i++)
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i = 1 ; i<=n ; i++ )
         {
-            int x = Integer.parseInt(br.readLine());
-            int[] dp = new int[ Math.max(4,x+1) ];
-
-            dp[1] = 1;
-            dp[2] = 2;
-            dp[3] = 4;
-            for(int j = 4; j<=x;j++)
-            {
-                dp[j] = dp[j-1]+dp[j-2]+dp[j-3];
-            }
-
-            sb.append(dp[x]).append("\n");
+            price[i] = Integer.parseInt(st.nextToken());
         }
-        System.out.println(sb);
 
+        for(int i =1; i<=n; i++)
+        {
+            for(int j = 1; j<=i ; j++)
+            {
+                dp[i] = Math.max(dp[i],price[j] + dp[i-j]);
+            }
+        }
+        System.out.println(dp[n]);
     }
 }
