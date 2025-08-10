@@ -20,12 +20,16 @@ class Main_today{
             price[i] = Integer.parseInt(st.nextToken());
         }
         dp[0] = 0;
+        for(int i = 1; i<=n ; i++)
+        {
+            dp[i] = price[i]*n;
+        }
 
         for(int i = 1 ; i<=n ;i++)
         {
             for(int j = 1 ; j<=i ; j++)
             {
-                dp[i] = Math.max(dp[i], price[j] + dp[i-j]);
+                dp[i] = Math.min(dp[i], price[j] + dp[i-j]);
             }
         }
         System.out.println(dp[n]);
