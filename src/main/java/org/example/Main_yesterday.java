@@ -1,31 +1,37 @@
 package org.example;
 
 import java.io.IOException;
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.BufferedReader;
 
 class Main_yesterday{
     public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
-        int[] price = new int[n+1];
-        int[] dp = new int [n+1];
+        int mod = 1000000009;
+        int max = 100000;
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for(int i = 1 ; i<=n ; i++ )
+        long[][] dp = new long [max+1][4];
+        dp[1][1] = 1; dp[1][2] = 0; dp[1][3] = 0;
+        dp[2][1] = 0; dp[2][2] = 1; dp[2][3] = 0;
+        dp[3][1] = 1; dp[3][2] = 1; dp[3][3] = 1;
+
+        for(int i = 4; i<=max; i++)
         {
-            price[i] = Integer.parseInt(st.nextToken());
+            dp[i][1] = (dp[i-1][2] + dp[i-1][3])%mod;
+            dp[i][2] = (dp[i-2][1] + dp[i-2][3])%mod;
+            dp[i][3] = (dp[i-3][2] + dp[i-3][1])%mod;
         }
 
-        for(int i =1; i<=n; i++)
+        StringBuilder sb = new StringBuilder();
+
+        for(int i =0; i<n; i++)
         {
-            for(int j = 1; j<=i ; j++)
-            {
-                dp[i] = Math.min(dp[i],price[j] + dp[i-j]);
-            }
+            int x = Integer.parseInt(br.readLine());
+            long result = (dp[x][1] + dp[x][2] + dp[x][3])%mod;
+            sb.append(result).append("\n");
         }
-        System.out.println(dp[n]);
+        System.out.println(sb);
     }
 }
