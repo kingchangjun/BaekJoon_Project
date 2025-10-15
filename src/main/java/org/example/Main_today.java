@@ -8,28 +8,29 @@ class Main_today{
     public static void main(String[] args)throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        int MOD = 9901;
-        int[][] dp = new int[n+1][3];
+        int MOD = 10007;
+        int[][] dp = new int[n+1][10];
 
-        if(n >=1)
+        for(int i =0 ; i<10;i++)
         {
-            dp[1][0] = 1;
-            dp[1][1] = 1;
-            dp[1][2] = 1;
+            dp[1][i] = 1;
         }
 
-        for(int i =2; i<=n; i++)
+        for(int i =2 ; i<=n; i++)
         {
-            dp[i][0] = ((dp[i-1][0] + dp[i-1][1] ) % MOD + dp[i-1][2] ) % MOD;
-            dp[i][1] = (dp[i-1][0] + dp[i-1][2] ) % MOD;
-            dp[i][2] = (dp[i-1][0] + dp[i-1][1]) % MOD;
+            dp[i][0] = dp[i-1][0];
+            for(int j = 1; j<10; j++)
+            {
+                dp[i][j] = (dp[i][j-1] + dp[i-1][j]) % MOD;
+            }
         }
         int sum = 0;
-        if(n>=1)
-            sum = ((dp[n][0] + dp[n][1]) % MOD + dp[n][2]) % MOD;
-        else
-            sum = 1;
+        for(int i =0; i<10; i++)
+        {
+            sum=( sum + dp[n][i] ) % MOD;
+        }
         System.out.println(sum);
-
     }
 }
+
+
